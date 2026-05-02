@@ -1,0 +1,380 @@
+Anda adalah AI Software Engineer senior yang bertugas merancang dan mengimplementasikan website klinik gigi berbasis Laravel.
+
+Buatkan rancangan dan implementasi teknis aplikasi web klinik gigi dengan stack Laravel yang clean, scalable, dan mudah dikembangkan. Gunakan pendekatan production-ready, struktur kode rapi, dan ikuti best practice Laravel.
+
+KONTEKS PROYEK
+Saya ingin membuat website klinik gigi dengan 3 area utama:
+1. Halaman publik
+2. Halaman pasien
+3. Halaman dokter
+
+Website ini fokus pada reservasi layanan klinik gigi, pengelolaan jadwal, data pasien, layanan, dan pengaturan profil klinik.
+
+TEKNOLOGI YANG DIGUNAKAN
+- Framework utama: Laravel
+- Gunakan Laravel terbaru yang stabil
+- Database: MySQL
+- Frontend: Blade + Tailwind CSS
+- Auth: Laravel Breeze / Laravel UI / Jetstream, pilih yang paling ringan dan cocok
+- Calendar untuk jadwal: FullCalendar atau solusi Laravel-friendly lain
+- Upload file/gambar: gunakan storage Laravel
+- Validasi: Form Request
+- Authorization: Middleware + Role-based access
+- Gunakan migration, seeder, factory, controller, model, request, policy bila perlu
+
+ROLE PENGGUNA
+1. Pasien
+- Bisa register dan login dari area /pasien
+- Bisa booking reservasi
+- Bisa melihat reservasi sendiri
+- Bisa mengelola profil sendiri
+
+2. Dokter
+- Login khusus di area /dokter
+- Jika membuka /dokter dan belum login, tampilkan login popup atau redirect ke login dokter
+- Dokter hanya 1 orang, tetapi tetap susun sistem agar role dokter jelas
+- Bisa mengelola reservasi, jadwal, layanan, pasien, dan pengaturan klinik
+
+TARGET PENGGUNA
+- Pasien dewasa dan lansia dengan masalah gigi
+- Anak-anak dengan gigi susu
+- Pasien dengan kebutuhan tindakan perawatan dan estetika gigi
+
+DAFTAR LAYANAN KLINIK
+Sediakan master data layanan yang bisa dikelola /dokter, mencakup:
+- Pemeriksaan dan konsultasi gigi
+- Tambal gigi
+- Scaling / pembersihan karang gigi
+- Cabut gigi biasa
+- Perawatan gusi ringan
+- Penanganan sakit gigi dan infeksi ringan
+- Perawatan saluran akar sederhana
+- Bleaching / pemutihan gigi
+- Perawatan gigi anak dasar
+- Pembuatan gigi tiruan lepasan sederhana
+- Edukasi dan kontrol kesehatan gigi
+
+SITEMAP YANG WAJIB DIBUAT
+
+A. HALAMAN PUBLIK
+- Navbar: Logo + Login/Register khusus pasien
+- Home
+- Tentang Klinik
+- Layanan
+- Profil Dokter
+- Jadwal Praktik
+- FAQ
+- Kontak
+
+B. HALAMAN PASIEN
+Semua halaman pasien harus diawali login/register melalui /pasien
+- Dashboard
+- Booking Reservasi
+- Reservasi Saya
+- Profil Saya
+
+C. HALAMAN DOKTER
+Semua halaman /dokter harus diawali login khusus dokter
+- Dashboard
+- Kelola Reservasi
+- Kalender Jadwal
+- Kelola Layanan
+- Kelola Pasien
+- Pengaturan Klinik
+
+FITUR DETAIL YANG WAJIB
+
+1. DASHBOARD DOKTER
+Tampilkan ringkasan cepat:
+Card bagian atas:
+- Total Reservasi
+- Menunggu
+- Terjadwal
+- Selesai
+- Total Pasien
+
+Bagian tengah:
+- Jadwal hari ini
+
+Bagian bawah:
+- Shortcut menu dokter (opsional)
+
+Dashboard hanya untuk ringkasan, bukan tempat edit utama.
+
+2. KELOLA RESERVASI
+Fitur utama untuk mengelola semua permintaan booking dari pasien.
+Data yang tampil:
+- kode reservasi
+- nama pasien
+- tanggal reservasi
+- jam kunjungan
+- layanan yang dipilih
+- keluhan pasien
+- status reservasi
+- metode pembayaran jika nanti dipakai
+
+Aksi:
+- lihat detail reservasi
+- konfirmasi reservasi
+- tolak reservasi
+- ubah jadwal reservasi
+- batalkan reservasi
+- tandai reservasi selesai
+
+Status reservasi minimal:
+- menunggu
+- terjadwal
+- ditolak
+- dibatalkan
+- selesai
+
+3. KALENDER JADWAL
+Buat tampilan visual jadwal praktik dokter.
+Data yang tampil:
+- tanggal
+- jam praktik
+- nama pasien per slot
+- layanan
+- status slot: kosong / terisi
+
+Fitur:
+- lihat jadwal per hari
+- lihat slot kosong
+- lihat slot penuh
+- pindahkan jadwal pasien
+- blok tanggal tertentu
+- tandai hari libur
+
+Karena dokter hanya 1, pastikan tidak ada jadwal bentrok.
+
+4. KELOLA LAYANAN
+Master data layanan klinik.
+Data tiap layanan:
+- nama layanan
+- deskripsi layanan
+- harga / estimasi biaya
+- durasi layanan
+- status aktif / nonaktif
+
+Fitur:
+- tambah layanan
+- edit layanan
+- hapus layanan
+- ubah harga
+- ubah durasi
+- aktif/nonaktifkan layanan
+
+Durasi layanan harus dipakai untuk logika slot booking.
+
+5. KELOLA PASIEN
+Data pasien sebagai pengguna sistem.
+Data yang tampil:
+- nama pasien
+- email
+- nomor HP
+- alamat jika ada
+- jumlah reservasi
+- tanggal terakhir booking
+
+Fitur:
+- lihat daftar pasien
+- cari pasien
+- lihat detail pasien
+- lihat riwayat reservasi pasien
+- edit data pasien
+- nonaktifkan akun pasien bila diperlukan
+
+Detail riwayat pasien minimal berisi:
+- tanggal kunjungan
+- jam kunjungan
+- layanan yang dipilih
+- keluhan pasien
+- status reservasi
+- biaya / estimasi biaya
+
+6. PENGATURAN KLINIK
+Buat halaman pengaturan yang bisa mengubah isi website publik.
+Subfitur:
+A. Identitas Klinik
+- nama klinik
+- logo klinik
+- deskripsi singkat
+- alamat
+
+B. Kontak Klinik
+- nomor WhatsApp
+- nomor telepon
+- email klinik
+
+C. Jam Operasional / Jadwal Praktik
+- hari buka
+- jam buka
+- jam tutup
+- hari libur
+
+D. Profil Dokter
+- nama dokter
+- foto dokter
+- gelar
+- spesialisasi / deskripsi singkat
+
+E. Pengaturan Reservasi
+- batas maksimal booking per hari
+- interval slot per jam
+- berapa hari ke depan pasien bisa booking
+- apakah pasien bisa reschedule sendiri atau tidak
+
+F. Banner / Promo
+- judul promo
+- deskripsi promo
+- gambar promo
+- masa berlaku promo
+
+Banner promo harus:
+- bisa upload lebih dari satu
+- ditampilkan di halaman home/index dalam bentuk slider/carousel
+- default tampil 1 banner
+- ada tombol kanan/kiri
+- bisa swipe/geser
+- hanya bersifat visual/informatif
+- tidak memengaruhi sistem reservasi secara langsung
+
+FITUR HALAMAN PASIEN
+
+1. Dashboard Pasien
+- ringkasan profil
+- status reservasi terbaru
+- shortcut ke booking baru
+- daftar reservasi terbaru
+
+2. Booking Reservasi
+Form booking minimal berisi:
+- pilih layanan
+- pilih tanggal
+- pilih jam
+- isi keluhan
+- data pasien otomatis dari akun
+- submit booking
+
+Validasi booking:
+- hanya bisa memilih slot yang tersedia
+- slot mengikuti jam operasional klinik
+- slot mengikuti interval yang diatur di pengaturan klinik
+- pertimbangkan durasi layanan
+- cegah double booking
+- batasi sesuai maksimal booking per hari
+- hanya bisa booking sampai batas hari yang ditentukan dokter
+
+3. Reservasi Saya
+- lihat semua reservasi milik pasien
+- filter status
+- lihat detail reservasi
+- reschedule sendiri jika diizinkan pengaturan klinik
+- batalkan reservasi jika diperlukan
+
+4. Profil Saya
+- edit nama
+- edit nomor HP
+- edit alamat
+- ubah password
+- lihat email akun
+
+ATURAN LOGIN DAN AKSES
+- Pasien register/login hanya untuk area pasien
+- Dokter login terpisah
+- Role-based middleware wajib
+- Pasien tidak boleh mengakses halaman dokter
+- Dokter tidak memakai alur register publik biasa
+- Gunakan seeder untuk akun dokter default
+
+DATABASE DAN STRUKTUR DATA
+Tolong rancang ERD dan tabel database yang tepat. Minimal pertimbangkan tabel:
+- users
+- roles atau field role
+- patients (jika dipisah)
+- doctors (opsional jika dipisah)
+- services
+- reservations
+- clinic_settings
+- banners
+- operational_hours
+- holidays / blocked_dates
+- reservation_histories atau activity logs (opsional tapi direkomendasikan)
+
+Field penting reservations:
+- id
+- reservation_code
+- patient_id / user_id
+- service_id
+- reservation_date
+- start_time
+- end_time
+- complaint
+- status
+- estimated_price
+- notes
+- created_by
+- updated_by
+
+LOGIKA BISNIS YANG WAJIB
+- Sistem slot mengikuti jam operasional
+- Interval slot bisa diatur dokter
+- Durasi layanan memengaruhi bentrok jadwal
+- Satu dokter, jadi tidak boleh ada tabrakan jadwal
+- Booking masuk awalnya ke status “menunggu”
+- Setelah dikonfirmasi dokter menjadi “terjadwal”
+- dokter bisa reschedule
+- Pasien hanya bisa reschedule jika pengaturan mengizinkan
+- Tanggal libur atau tanggal diblok tidak bisa dibooking
+- Layanan nonaktif tidak boleh muncul di form booking pasien
+
+OUTPUT YANG SAYA INGINKAN DARI ANDA
+Berikan jawaban dalam urutan berikut:
+
+1. Analisis kebutuhan sistem
+2. Rekomendasi arsitektur Laravel
+3. Desain database lengkap
+   - daftar tabel
+   - field penting
+   - relasi antar tabel
+4. Daftar route web
+   - route publik
+   - route pasien
+   - route dokter
+5. Struktur folder / modul yang disarankan
+6. Daftar model, controller, request, middleware, dan policy yang perlu dibuat
+7. Alur booking dari pasien sampai selesai
+8. Validasi penting dan edge cases
+9. Rencana UI halaman utama dan dashboard
+10. Contoh migration
+11. Contoh model dan relasi
+12. Contoh controller utama
+13. Contoh implementasi booking logic
+14. Contoh query untuk cek bentrok jadwal
+15. Saran package/library Laravel yang cocok
+16. Saran tahap pengerjaan bertahap dari MVP sampai versi lanjut
+
+GAYA IMPLEMENTASI
+- Gunakan clean code
+- Pisahkan logic ke service class jika perlu
+- Hindari logic berat di controller
+- Gunakan naming Laravel yang konsisten
+- Tulis kode yang mudah dibaca
+- Fokus ke maintainability
+- Jangan overengineering
+- Prioritaskan MVP dulu, lalu beri opsi fitur lanjutan
+
+CATATAN PENTING
+- Website ini untuk klinik gigi dengan 1 dokter utama
+- Sistem harus sederhana tapi rapi
+- Harus nyaman dipakai dokter
+- Halaman publik harus mudah dipahami pasien
+- Booking harus aman dari bentrok jadwal
+- Banner promo harus dikelola dari dokter dan tampil di home sebagai carousel
+
+Sekarang bantu saya mulai dari:
+1. analisis kebutuhan sistem,
+2. desain database,
+3. route list,
+4. struktur modul Laravel,
+5. lalu buatkan migration inti dan contoh kode implementasi booking.

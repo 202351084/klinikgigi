@@ -1,0 +1,88 @@
+<?php $__env->startSection('body'); ?>
+    <?php echo $__env->make('public.partials.nav', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+    <main class="container">
+        <section class="hero panel">
+            <div>
+                <span class="badge">Website Publik Cahaya Dental Care</span>
+                <h1><?php echo e($klinik->nama_klinik); ?></h1>
+                <p class="muted"><?php echo e($klinik->deskripsi_singkat ?: 'Website resmi klinik untuk informasi layanan, profil dokter, jadwal praktik, dan reservasi pasien.'); ?></p>
+                <?php if($dokter): ?>
+                    <p><strong>Dokter:</strong> <?php echo e($dokter->nama_dokter); ?><?php echo e($dokter->gelar ? ', '.$dokter->gelar : ''); ?></p>
+                <?php endif; ?>
+                <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                    <a href="<?php echo e(route('public.schedule')); ?>" class="btn">Lihat Jadwal Praktik</a>
+                    <a href="/pasien/reservasi/buat" class="btn btn-secondary">Booking Reservasi</a>
+                </div>
+            </div>
+            <div>
+                <?php if($bannerList->first()?->gambar_banner_promo): ?>
+                    <img class="media" src="<?php echo e(asset('storage/'.$bannerList->first()->gambar_banner_promo)); ?>" alt="Banner promo klinik">
+                <?php else: ?>
+                    <div class="card">
+                        <strong>Banner promo klinik</strong>
+                        <p class="muted">Banner publik akan tampil di sini setelah dokter mengunggahnya dari panel pengaturan.</p>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </section>
+
+        <?php if($bannerList->count() > 1): ?>
+            <section class="panel" style="margin-top:24px;">
+                <h2>Promo & Informasi</h2>
+                <div class="grid grid-3" style="margin-top:16px;">
+                    <?php $__currentLoopData = $bannerList; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <div class="card">
+                            <?php if($banner->gambar_banner_promo): ?>
+                                <img class="media" src="<?php echo e(asset('storage/'.$banner->gambar_banner_promo)); ?>" alt="Banner promo">
+                            <?php endif; ?>
+                        </div>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </div>
+            </section>
+        <?php endif; ?>
+
+        <section class="grid grid-3" style="margin-top:24px;">
+            <?php $__empty_1 = true; $__currentLoopData = $layananList; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $layanan): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                <article class="card">
+                    <h3><?php echo e($layanan->nama_layanan); ?></h3>
+                    <p class="muted"><?php echo e($layanan->deskripsi_layanan); ?></p>
+                    <p>Estimasi: Rp<?php echo e(number_format($layanan->harga_estimasi_biaya, 0, ',', '.')); ?> | <?php echo e($layanan->durasi_layanan); ?> menit</p>
+                </article>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                <div class="card">Belum ada layanan aktif.</div>
+            <?php endif; ?>
+        </section>
+
+        <section class="grid grid-2" style="margin-top:24px;">
+            <div class="panel">
+                <h2>Jadwal Praktik</h2>
+                <table class="table">
+                    <thead><tr><th>Hari</th><th>Jam</th></tr></thead>
+                    <tbody>
+                        <?php $__empty_1 = true; $__currentLoopData = $jamOperasionalList; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $jam): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                            <tr>
+                                <td><?php echo e(ucfirst($jam->hari_buka)); ?></td>
+                                <td><?php echo e($jam->hari_libur ? 'Libur' : substr($jam->jam_buka,0,5).' - '.substr($jam->jam_tutup,0,5)); ?></td>
+                            </tr>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                            <tr><td colspan="2">Jadwal belum diatur.</td></tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
+            <div class="panel">
+                <h2>FAQ Singkat</h2>
+                <?php $__empty_1 = true; $__currentLoopData = $faqList; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $faq): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                    <div style="margin-bottom:16px;">
+                        <strong><?php echo e($faq->pertanyaan); ?></strong>
+                        <p class="muted"><?php echo e($faq->jawaban); ?></p>
+                    </div>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                    <p class="muted">FAQ belum ditambahkan.</p>
+                <?php endif; ?>
+            </div>
+        </section>
+    </main>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', ['title' => $klinik->nama_klinik], array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH E:\cahaya_dental_care\resources\views/public/home.blade.php ENDPATH**/ ?>
