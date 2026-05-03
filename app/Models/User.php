@@ -5,7 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -53,12 +53,12 @@ class User extends Authenticatable
         ];
     }
 
-    public function pasien(): HasOne
+    public function pasien(): HasOneThrough
     {
         return $this->hasOneThrough(Pasien::class, PasienUser::class, 'user_id', 'id_pasien', 'id', 'id_pasien');
     }
 
-    public function dokter(): HasOne
+    public function dokter(): HasOneThrough
     {
         return $this->hasOneThrough(Dokter::class, DokterUser::class, 'user_id', 'id_dokter', 'id', 'id_dokter');
     }

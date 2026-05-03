@@ -34,7 +34,7 @@
 
                     <div class="mt-5 inline-flex max-w-full rounded-[22px] border border-white/75 bg-white/78 px-4 py-3 text-sm text-clinic-ink shadow-[0_14px_28px_-24px_rgba(36,65,68,0.45)] sm:mt-6 sm:px-5 sm:py-4">
                         Dokter utama:
-                        <span class="ml-2 font-bold">Drg. Sri Ainur Astutik</span>
+                        <span class="ml-2 font-bold">{{ $dokter ? $dokter->nama_dokter : 'Belum diatur' }}</span>
                     </div>
 
                     <div class="mt-6 flex flex-col gap-3 sm:mt-7 sm:flex-row sm:flex-wrap xl:flex-nowrap xl:items-center">
@@ -191,6 +191,29 @@
                         <div class="rounded-2xl border border-clinic-line/70 bg-[#fbf7ea] px-4 py-4 text-sm text-clinic-moss">Jadwal belum diatur.</div>
                     @endforelse
                 </div>
+            </div>
+        </section>
+
+        <section class="rounded-[24px] border border-clinic-line/80 bg-white/90 p-5 shadow-[0_24px_50px_-40px_rgba(36,65,68,0.55)] sm:rounded-[28px] sm:p-6">
+            <div class="text-xs font-semibold uppercase tracking-[0.24em] text-clinic-moss">Lokasi klinik</div>
+            <h2 class="mt-2 text-xl font-black text-clinic-ink sm:text-2xl">Kunjungi Cahaya Dental Care</h2>
+            <div class="mt-5 overflow-hidden rounded-[20px] border border-clinic-line/70 bg-[#fbf7ea]">
+                @if($klinik->alamat)
+                    <iframe 
+                        width="100%" 
+                        height="400" 
+                        frameborder="0" 
+                        scrolling="no" 
+                        marginheight="0" 
+                        marginwidth="0" 
+                        src="https://maps.google.com/maps?q={{ urlencode($klinik->alamat) }}&t=&z=16&ie=UTF8&iwloc=&output=embed"
+                        class="block w-full"
+                    ></iframe>
+                @else
+                    <div class="flex h-[400px] items-center justify-center p-5 text-center text-sm text-clinic-moss">
+                        Alamat klinik belum diisi sehingga peta tidak dapat ditampilkan.
+                    </div>
+                @endif
             </div>
         </section>
 
