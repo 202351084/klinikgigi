@@ -17,7 +17,7 @@
                 {{ $klinik->nama_klinik }}
             </div>
             <div class="text-xs text-clinic-moss">
-                Klinik gigi keluarga dan perawatan estetika
+                {{ $klinik->deskripsi_singkat ?: 'Klinik gigi keluarga dan perawatan estetika' }}
             </div>
         </div>
     </div>
